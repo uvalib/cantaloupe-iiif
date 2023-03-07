@@ -278,9 +278,33 @@ class CustomDelegate
   #
   def s3source_object_info(options = {})
 
-     context.each{ |k,v| puts "INFO: #{k}: #{v}" } 
+     #context.each{ |k,v| puts "INFO: #{k}: #{v}" } 
 
-     { "bucket" => "uva-dpg3k-scratch", "key" => "999999.jp2" }
+     # defaults
+     iiif_bucket    = "iiif-assets"
+     mandala_bucket = "mandala-assets"
+
+     # get the extracted identifier
+     id = context['identifier']
+
+     # look for uva-lib:nnnnnn (6 digits)
+     if match = id.match(/^uva-lib:([0-9][0-9])?([0-9][0-9])?([0-9][0-9])?$/)
+        d1, d2, d3 = match.captures
+        key = "uva-lib/#{d1}/#{d2}/#{d3}/#{d1}#{d2}#{d3}.jp2"
+        puts "INFO: rewrite [#{id}] -> [#{key}]"
+        return { "bucket" => iiif_bucket, "key" => key }
+     end
+
+     # look for uva-lib:nnnnnnn (7 digits)
+     if match = id.match(/^uva-lib:([0-9][0-9])?([0-9][0-9])?([0-9][0-9])?([0-9])?$/)
+        d1, d2, d3, d4 = match.captures
+        key = "uva-lib/#{d1}/#{d2}/#{d3}/#{d4}/#{d1}#{d2}#{d3}#{d4}.jp2"
+        puts "INFO: rewrite [#{id}] -> [#{key}]"
+        return { "bucket" => iiif_bucket, "key" => key }
+     end
+
+     # the failure case
+     { "bucket" => "none", "key" => "none" }
   end
 
   ##
