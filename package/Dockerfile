@@ -27,9 +27,8 @@ RUN chown -R libsnlocal /home/libsnlocal $APP_HOME && chgrp -R lb-digiserv $APP_
 EXPOSE 8080
 CMD scripts/entry.sh
 
-# download the cantaloupe release
-RUN wget -c https://github.com/cantaloupe-project/cantaloupe/releases/download/v5.0.5/cantaloupe-5.0.5.zip && unzip cantaloupe-5.0.5.zip && rm cantaloupe-5.0.5.zip
-RUN mv cantaloupe-5.0.5/cantaloupe-5.0.5.jar $APP_HOME/bin && ln -s $APP_HOME/bin/cantaloupe-5.0.5.jar $APP_HOME/bin/cantaloupe.jar
+# Move in cantaloupe assets
+COPY distro/cantaloupe-5.0.5/cantaloupe-5.0.5.jar $APP_HOME/bin/cantaloupe.jar
 
 # Move in openjpeg assets
 COPY distro/openjpeg-v2.5.0-linux-x86_64/bin/opj_decompress /usr/local/bin/
