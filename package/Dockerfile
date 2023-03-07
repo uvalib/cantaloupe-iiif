@@ -29,13 +29,11 @@ CMD scripts/entry.sh
 
 # Move in cantaloupe assets
 COPY distro/cantaloupe-5.0.5/cantaloupe-5.0.5.jar $APP_HOME/bin/cantaloupe.jar
+COPY distro/cantaloupe-5.0.5/deps/Linux-x86-64/lib/libkdu_a80R.so /usr/local/lib/
+COPY distro/cantaloupe-5.0.5/deps/Linux-x86-64/lib/libkdu_jni.so /usr/local/lib/
+COPY distro/cantaloupe-5.0.5/deps/Linux-x86-64/lib/libkdu_v80R.so /usr/local/lib/
 
-# Move in openjpeg assets
-COPY distro/openjpeg-v2.5.0-linux-x86_64/bin/opj_decompress /usr/local/bin/
-COPY distro/openjpeg-v2.5.0-linux-x86_64/bin/opj_dump /usr/local/bin/
-COPY distro/openjpeg-v2.5.0-linux-x86_64/lib/libopenjp2.so.7 /usr/local/lib/
-
-# Move in necessary assets
+# Move in custom assets
 COPY package/scripts/entry.sh $APP_HOME/scripts/entry.sh
 COPY package/config/cantaloupe.properties $APP_HOME/bin
 COPY package/data/container_bash_profile /home/libsnlocal/.profile
