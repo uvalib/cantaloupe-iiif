@@ -1,0 +1,5 @@
+.idea
+tmp
+env.*
+package/scripts/build.ksh
+package/scripts/shell.ksh
