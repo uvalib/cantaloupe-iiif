@@ -3,7 +3,7 @@
 #
 
 export LD_LIBRARY_PATH=/usr/local/lib
-cd bin; java -Dcantaloupe.config=cantaloupe.properties -Xmx2g -jar cantaloupe.jar
+cd bin; java -Dcantaloupe.config=cantaloupe.properties ${JAVA_OPTS} -jar cantaloupe.jar
 
 #
 # end of file
