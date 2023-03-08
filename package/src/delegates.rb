@@ -290,17 +290,37 @@ class CustomDelegate
      # look for uva-lib:nnnnnn (6 digits)
      if match = id.match(/^uva-lib:([0-9][0-9])?([0-9][0-9])?([0-9][0-9])?$/)
         d1, d2, d3 = match.captures
-        key = "uva-lib/#{d1}/#{d2}/#{d3}/#{d1}#{d2}#{d3}.jp2"
-        puts "INFO: rewrite [#{id}] -> [#{key}]"
-        return { "bucket" => iiif_bucket, "key" => key }
+        key    = "uva-lib/#{d1}/#{d2}/#{d3}/#{d1}#{d2}#{d3}.jp2"
+        bucket = iiif_bucket
+        puts "INFO: rewrite [#{id}] -> [${bucket}/#{key}]"
+        return { "bucket" => bucket, "key" => key }
      end
 
      # look for uva-lib:nnnnnnn (7 digits)
      if match = id.match(/^uva-lib:([0-9][0-9])?([0-9][0-9])?([0-9][0-9])?([0-9])?$/)
         d1, d2, d3, d4 = match.captures
-        key = "uva-lib/#{d1}/#{d2}/#{d3}/#{d4}/#{d1}#{d2}#{d3}#{d4}.jp2"
-        puts "INFO: rewrite [#{id}] -> [#{key}]"
-        return { "bucket" => iiif_bucket, "key" => key }
+        key    = "uva-lib/#{d1}/#{d2}/#{d3}/#{d4}/#{d1}#{d2}#{d3}#{d4}.jp2"
+        bucket = iiif_bucket
+        puts "INFO: rewrite [#{id}] -> [${bucket}/#{key}]"
+        return { "bucket" => bucket, "key" => key }
+     end
+
+     # look for shanti-image-*nnnn (4 digits)
+     if match = id.match(/^shanti-image*-([0-9][0-9])?([0-9][0-9])?$/)
+        d1, d2 = match.captures
+        key    = "mandala-assets/#{d1}/#{d2}/shanti-image-#{d1}#{d2}.jp2"
+        bucket = mandala_bucket
+        puts "INFO: rewrite [#{id}] -> [${bucket}/#{key}]"
+        return { "bucket" => bucket, "key" => key }
+     end
+
+     # look for shanti-image-*nnnnn (5 digits)
+     if match = id.match(/^shanti-image*-([0-9][0-9])?([0-9][0-9])?([0-9])?$/)
+        d1, d2, d3 = match.captures
+        key    = "mandala-assets/#{d1}/#{d2}/#{d3}/shanti-image-#{d1}#{d2}#{d3}.jp2"
+        bucket = mandala_bucket
+        puts "INFO: rewrite [#{id}] -> [${bucket}/#{key}]"
+        return { "bucket" => bucket, "key" => key }
      end
 
      # the failure case
