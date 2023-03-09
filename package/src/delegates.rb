@@ -323,6 +323,15 @@ class CustomDelegate
         return { "bucket" => bucket, "key" => key }
      end
 
+     # look for shanti-image-*nnnnnn (6 digits)
+     if match = id.match(/^shanti-image*-([0-9][0-9])?([0-9][0-9])?([0-9][0-9])?$/)
+        d1, d2, d3 = match.captures
+        key    = "mandala-assets/#{d1}/#{d2}/#{d3}/shanti-image-#{d1}#{d2}#{d3}.jp2"
+        bucket = mandala_bucket
+        puts "INFO: rewrite [#{id}] -> [${bucket}/#{key}]"
+        return { "bucket" => bucket, "key" => key }
+     end
+
      # the failure case
      { "bucket" => "none", "key" => "none" }
   end
