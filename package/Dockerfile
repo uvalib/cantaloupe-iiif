@@ -1,10 +1,10 @@
 #
 # build the target container
 #
-FROM public.ecr.aws/amazoncorretto/amazoncorretto:11-al2022-jdk
+FROM public.ecr.aws/amazoncorretto/amazoncorretto:17-al2023-jdk
 
 # update the packages
-RUN yum -y update && yum -y install findutils shadow-utils wget unzip
+RUN yum -y update && yum -y install findutils shadow-utils wget unzip hostname
 
 # Create the run user and group
 RUN groupadd -g 16339 lb-digiserv && useradd -u 118698 -g lb-digiserv libsnlocal
@@ -36,11 +36,12 @@ COPY distro/cantaloupe-5.0.5/deps/Linux-x86-64/lib/libkdu_v80R.so /usr/local/lib
 # Move in custom assets
 COPY package/scripts/entry.sh $APP_HOME/scripts/entry.sh
 COPY package/config/cantaloupe.properties $APP_HOME/bin
-COPY package/data/container_bash_profile /home/libsnlocal/.profile
+RUN mkdir -p /home/libsnlocal/.bashrc.d
+COPY package/data/container_bash_profile /home/libsnlocal/.bashrc.d/profile
 COPY package/src/delegates.rb $APP_HOME/bin
 
 # Ensure permissions are correct
-RUN chown libsnlocal:lb-digiserv /home/libsnlocal/.profile $APP_HOME/scripts/entry.sh && chmod 755 /home/libsnlocal/.profile $APP_HOME/scripts/entry.sh
+RUN chown libsnlocal:lb-digiserv /home/libsnlocal/.bashrc.d/profile $APP_HOME/scripts/entry.sh && chmod 755 /home/libsnlocal/.bashrc.d/profile $APP_HOME/scripts/entry.sh
 
 # Add the build tag
 ARG BUILD_TAG
