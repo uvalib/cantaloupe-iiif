@@ -287,12 +287,16 @@ class CustomDelegate
      # get the extracted identifier
      id = context['identifier']
 
+     #
+     # Start with the most common cases
+     #
+
      # look for uva-lib:nnnnnn (6 digits)
      if match = id.match(/^uva-lib:([0-9][0-9])?([0-9][0-9])?([0-9][0-9])?$/)
         d1, d2, d3 = match.captures
         key    = "uva-lib/#{d1}/#{d2}/#{d3}/#{d1}#{d2}#{d3}.jp2"
         bucket = iiif_bucket
-        puts "INFO: rewrite [#{id}] -> [${bucket}/#{key}]"
+        puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
         return { "bucket" => bucket, "key" => key }
      end
 
@@ -301,7 +305,7 @@ class CustomDelegate
         d1, d2, d3, d4 = match.captures
         key    = "uva-lib/#{d1}/#{d2}/#{d3}/#{d4}/#{d1}#{d2}#{d3}#{d4}.jp2"
         bucket = iiif_bucket
-        puts "INFO: rewrite [#{id}] -> [${bucket}/#{key}]"
+        puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
         return { "bucket" => bucket, "key" => key }
      end
 
@@ -310,7 +314,7 @@ class CustomDelegate
         d1, d2 = match.captures
         key    = "mandala-assets/#{d1}/#{d2}/shanti-image-#{d1}#{d2}.jp2"
         bucket = mandala_bucket
-        puts "INFO: rewrite [#{id}] -> [${bucket}/#{key}]"
+        puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
         return { "bucket" => bucket, "key" => key }
      end
 
@@ -319,7 +323,7 @@ class CustomDelegate
         d1, d2, d3 = match.captures
         key    = "mandala-assets/#{d1}/#{d2}/#{d3}/shanti-image-#{d1}#{d2}#{d3}.jp2"
         bucket = mandala_bucket
-        puts "INFO: rewrite [#{id}] -> [${bucket}/#{key}]"
+        puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
         return { "bucket" => bucket, "key" => key }
      end
 
@@ -328,7 +332,65 @@ class CustomDelegate
         d1, d2, d3 = match.captures
         key    = "mandala-assets/#{d1}/#{d2}/#{d3}/shanti-image-#{d1}#{d2}#{d3}.jp2"
         bucket = mandala_bucket
-        puts "INFO: rewrite [#{id}] -> [${bucket}/#{key}]"
+        puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
+        return { "bucket" => bucket, "key" => key }
+     end
+
+     # look for dibs:xxxxxxxxx-nnn
+     if match = id.match(/^dibs:([A-Z0-9]+)-?([0-9][0-9][0-9])?$/)
+        d1, d2 = match.captures
+        key    = "dibs/#{d1}/#{d1}-#{d2}.jp2"
+        bucket = iiif_bucket
+        puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
+        return { "bucket" => bucket, "key" => key }
+     end
+
+     #
+     # Less common
+     #
+
+     # look for tsm:nnnnnnn (7 digits)
+     if match = id.match(/^tsm:([0-9][0-9])?([0-9][0-9])?([0-9][0-9])?([0-9])?$/)
+        d1, d2, d3, d4 = match.captures
+        key    = "tsm/#{d1}/#{d2}/#{d3}/#{d4}/#{d1}#{d2}#{d3}#{d4}.jp2"
+        bucket = iiif_bucket
+        puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
+        return { "bucket" => bucket, "key" => key }
+     end
+
+     # look for law:archives:cnnnn (4 digits)
+     if match = id.match(/^law:archives:c([0-9][0-9])?([0-9][0-9])?$/)
+        d1, d2 = match.captures
+        key    = "law/archives/#{d1}/#{d2}/#{d1}#{d2}.jp2"
+        bucket = iiif_bucket
+        puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
+        return { "bucket" => bucket, "key" => key }
+     end
+
+     # look for law:archives:cnnnnn (5 digits)
+     if match = id.match(/^law:archives:c([0-9][0-9])?([0-9][0-9])?([0-9])?$/)
+        d1, d2, d3 = match.captures
+        key    = "law/archives/#{d1}/#{d2}/#{d3}/#{d1}#{d2}#{d3}.jp2"
+        bucket = iiif_bucket
+        puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
+        return { "bucket" => bucket, "key" => key }
+     end
+
+     # look for law:lile:nnn (3 digits)
+     if match = id.match(/^law:lile:([0-9][0-9])?([0-9])?$/)
+        d1, d2 = match.captures
+        key    = "law/lile/#{d1}/#{d2}/#{d1}#{d2}.jp2"
+        bucket = iiif_bucket
+        puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
+        return { "bucket" => bucket, "key" => key }
+     end
+
+     # look for static:n (1 digit)
+     if match = id.match(/^static:([0-9])?$/)
+        d1 = match.captures[ 0 ]
+        key    = "static/#{d1}/#{d1}.jp2"
+        bucket = iiif_bucket
+        puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
         return { "bucket" => bucket, "key" => key }
      end
 
