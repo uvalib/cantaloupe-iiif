@@ -276,16 +276,17 @@ class CustomDelegate
   # @return [Hash<String,Object>,nil] Hash containing `bucket` and `key` keys;
   #                                   or nil if not found.
   #
+
   def s3source_object_info(options = {})
 
      #context.each{ |k,v| puts "INFO: #{k}: #{v}" } 
 
-     # defaults
-     iiif_bucket    = "iiif-assets"
-     mandala_bucket = "mandala-assets"
-
      # get the extracted identifier
      id = context['identifier']
+
+     # pull the target bucket names from the environment
+     iiif_bucket = ENV['IIIF_BUCKET_NAME']
+     mandala_bucket = ENV['MANDALA_BUCKET_NAME']
 
      #
      # Start with the most common cases
