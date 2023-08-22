@@ -346,6 +346,24 @@ class CustomDelegate
         return { "bucket" => bucket, "key" => key }
      end
 
+     # look for shanti-image-*nnnnnnn (7 digits)
+     if match = id.match(/^shanti-image*-([0-9][0-9])?([0-9][0-9])?([0-9][0-9])?([0-9])?$/)
+        d1, d2, d3, d4 = match.captures
+        key    = "mandala-assets/#{d1}/#{d2}/#{d3}/#{d4}/shanti-image-#{d1}#{d2}#{d3}#{d4}.jp2"
+        bucket = mandala_bucket
+        puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
+        return { "bucket" => bucket, "key" => key }
+     end
+
+     # look for shanti-image-*nnnnnnnn (8 digits)
+     if match = id.match(/^shanti-image*-([0-9][0-9])?([0-9][0-9])?([0-9][0-9])?([0-9][0-9])?$/)
+        d1, d2, d3, d4 = match.captures
+        key    = "mandala-assets/#{d1}/#{d2}/#{d3}/#{d4}/shanti-image-#{d1}#{d2}#{d3}#{d4}.jp2"
+        bucket = mandala_bucket
+        puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
+        return { "bucket" => bucket, "key" => key }
+     end
+
      # look for dibs:xxxxxxxxx-nnn
      if match = id.match(/^dibs:([A-Z0-9]+)-?([0-9][0-9][0-9])?$/)
         d1, d2 = match.captures
