@@ -423,6 +423,7 @@ class CustomDelegate
      end
 
      # the failure case
+     puts "ERROR: missing rewrite [#{id}]"
      { "bucket" => "none", "key" => "none" }
   end
 
