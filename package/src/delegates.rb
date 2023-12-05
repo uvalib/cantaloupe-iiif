@@ -404,6 +404,15 @@ class CustomDelegate
         return { "bucket" => bucket, "key" => key }
      end
 
+     # look for law:archives:rg32-400:name
+     if match = id.match(/^law:archives:rg32-400:(.+)?$/)
+        c1 = match.captures[0]
+        key    = "law/archives/rg32-400/law:archives:rg32-400:#{c1}.jp2"
+        bucket = iiif_bucket
+        puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
+        return { "bucket" => bucket, "key" => key }
+     end
+
      # look for law:lile:nnn (3 digits)
      if match = id.match(/^law:lile:([0-9][0-9])?([0-9])?$/)
         d1, d2 = match.captures
