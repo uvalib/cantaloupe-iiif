@@ -292,6 +292,15 @@ class CustomDelegate
      # Start with the most common cases
      #
 
+     # look for uva-lib:nnnnn (5 digits)
+     if match = id.match(/^uva-lib:([0-9][0-9])?([0-9][0-9])?([0-9])?$/)
+        d1, d2, d3 = match.captures
+        key    = "uva-lib/#{d1}/#{d2}/#{d3}/#{d1}#{d2}#{d3}.jp2"
+        bucket = iiif_bucket
+        puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
+        return { "bucket" => bucket, "key" => key }
+     end
+
      # look for uva-lib:nnnnnn (6 digits)
      if match = id.match(/^uva-lib:([0-9][0-9])?([0-9][0-9])?([0-9][0-9])?$/)
         d1, d2, d3 = match.captures
