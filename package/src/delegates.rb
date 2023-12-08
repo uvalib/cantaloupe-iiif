@@ -413,6 +413,15 @@ class CustomDelegate
         return { "bucket" => bucket, "key" => key }
      end
 
+     # look for law:pwct:nnnn (4 digits)
+     if match = id.match(/^law:pwct:([0-9][0-9])?([0-9][0-9])?$/)
+        d1, d2 = match.captures
+        key    = "law/pwct/#{d1}/#{d2}/#{d1}#{d2}.jp2"
+        bucket = iiif_bucket
+        puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
+        return { "bucket" => bucket, "key" => key }
+     end
+
      # look for law:pwct:nnnnn (5 digits)
      if match = id.match(/^law:pwct:([0-9][0-9])?([0-9][0-9])?([0-9])?$/)
         d1, d2, d3 = match.captures
