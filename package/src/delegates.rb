@@ -458,6 +458,51 @@ class CustomDelegate
         return { "bucket" => bucket, "key" => key }
      end
 
+     # look for law:mrcs:nn (2 digits)
+     if match = id.match(/^law:mrcs:([0-9][0-9])?$/)
+        d1 = match.captures[0]
+        key    = "law/mrcs/#{d1}/#{d1}.jp2"
+        bucket = iiif_bucket
+        puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
+        return { "bucket" => bucket, "key" => key }
+     end
+
+     # look for law:mrcs:nnn (3 digits)
+     if match = id.match(/^law:mrcs:([0-9][0-9])?([0-9])?$/)
+        d1, d2 = match.captures
+        key    = "law/mrcs/#{d1}/#{d2}/#{d1}#{d2}.jp2"
+        bucket = iiif_bucket
+        puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
+        return { "bucket" => bucket, "key" => key }
+     end
+
+     # look for law:mrcs:nnnn (4 digits)
+     if match = id.match(/^law:mrcs:([0-9][0-9])?([0-9][0-9])?$/)
+        d1, d2 = match.captures
+        key    = "law/mrcs/#{d1}/#{d2}/#{d1}#{d2}.jp2"
+        bucket = iiif_bucket
+        puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
+        return { "bucket" => bucket, "key" => key }
+     end
+
+     # look for law:mrcs:nnnnn (5 digits)
+     if match = id.match(/^law:mrcs:([0-9][0-9])?([0-9][0-9])?([0-9])?$/)
+        d1, d2, d3 = match.captures
+        key    = "law/mrcs/#{d1}/#{d2}/#{d3}/#{d1}#{d2}#{d3}.jp2"
+        bucket = iiif_bucket
+        puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
+        return { "bucket" => bucket, "key" => key }
+     end
+
+     # look for law:mrcs:nnnnnn (6 digits)
+     if match = id.match(/^law:mrcs:([0-9][0-9])?([0-9][0-9])?([0-9][0-9])?$/)
+        d1, d2, d3 = match.captures
+        key    = "law/mrcs/#{d1}/#{d2}/#{d3}/#{d1}#{d2}#{d3}.jp2"
+        bucket = iiif_bucket
+        puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
+        return { "bucket" => bucket, "key" => key }
+     end
+
      # look for law:archives:rg32-400:name
      if match = id.match(/^law:archives:rg32-400:(.+)?$/)
         c1 = match.captures[0]
