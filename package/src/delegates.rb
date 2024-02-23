@@ -395,6 +395,15 @@ class CustomDelegate
         return { "bucket" => bucket, "key" => key }
      end
 
+     # look for jag:mlr:nnnnnn (6 digits)
+     if match = id.match(/^jag:mlr:([0-9][0-9])?([0-9][0-9])?([0-9][0-9])?$/)
+        d1, d2, d3 = match.captures
+        key    = "law/jag/mlr/#{d1}/#{d2}/#{d3}/#{d1}#{d2}#{d3}.jp2"
+        bucket = iiif_bucket
+        puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
+        return { "bucket" => bucket, "key" => key }
+     end
+
      # look for law:archives:cnnnn (4 digits)
      if match = id.match(/^law:archives:c([0-9][0-9])?([0-9][0-9])?$/)
         d1, d2 = match.captures
@@ -426,15 +435,6 @@ class CustomDelegate
      if match = id.match(/^law:archives:c([0-9][0-9])?([0-9][0-9])?([0-9][0-9])?([0-9])?$/)
         d1, d2, d3, d4 = match.captures
         key    = "law/archives/#{d1}/#{d2}/#{d3}/#{d4}/#{d1}#{d2}#{d3}#{d4}.jp2"
-        bucket = iiif_bucket
-        puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
-        return { "bucket" => bucket, "key" => key }
-     end
-
-     # look for law:jag:mlr:nnnnnn (6 digits)
-     if match = id.match(/^law:jag:mlr:([0-9][0-9])?([0-9][0-9])?([0-9][0-9])?$/)
-        d1, d2, d3 = match.captures
-        key    = "law/jag/mlr/#{d1}/#{d2}/#{d3}/#{d1}#{d2}#{d3}.jp2"
         bucket = iiif_bucket
         puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
         return { "bucket" => bucket, "key" => key }
