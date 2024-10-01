@@ -559,7 +559,7 @@ class CustomDelegate
 
      # the failure case
      puts "ERROR: missing rewrite [#{id}]"
-     { "bucket" => "none", "key" => "none" }
+     nil
   end
 
   ##
