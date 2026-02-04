@@ -14,7 +14,7 @@ ENV TZ=UTC
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # Specify home
-ENV APP_HOME /cantaloupe-iiif
+ENV APP_HOME=/cantaloupe-iiif
 WORKDIR $APP_HOME
 
 # Create necessary directories
@@ -28,10 +28,10 @@ EXPOSE 8080
 CMD scripts/entry.sh
 
 # add cantaloupe assets
-ENV CANTALOUPE_VERSION=5.0.6
+ENV CANTALOUPE_VERSION=5.0.7
 RUN cd /tmp && wget https://github.com/cantaloupe-project/cantaloupe/releases/download/v${CANTALOUPE_VERSION}/cantaloupe-${CANTALOUPE_VERSION}.zip && unzip cantaloupe-${CANTALOUPE_VERSION}.zip
 RUN cp /tmp/cantaloupe-${CANTALOUPE_VERSION}/cantaloupe-${CANTALOUPE_VERSION}.jar $APP_HOME/bin/cantaloupe.jar
-RUN cp /tmp/cantaloupe-${CANTALOUPE_VERSION}/deps/Linux-x86-64/lib/libkdu_a80R.so /tmp/cantaloupe-${CANTALOUPE_VERSION}/deps/Linux-x86-64/lib/libkdu_jni.so /tmp/cantaloupe-${CANTALOUPE_VERSION}/deps/Linux-x86-64/lib/libkdu_v80R.so /usr/local/lib/
+RUN cp /tmp/cantaloupe-${CANTALOUPE_VERSION}/deps/Linux-x86-64/lib/*.so /usr/local/lib/
 RUN rm -fr /tmp/cantaloupe-${CANTALOUPE_VERSION} /tmp/cantaloupe-${CANTALOUPE_VERSION}.zip
 
 # Move in custom assets
