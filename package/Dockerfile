@@ -25,7 +25,7 @@ RUN chown -R libsnlocal /home/libsnlocal $APP_HOME && chgrp -R lb-digiserv $APP_
 
 # port and run command
 EXPOSE 8080
-CMD scripts/entry.sh
+CMD ["scripts/entry.sh"]
 
 # add cantaloupe assets
 ENV CANTALOUPE_VERSION=5.0.7
