@@ -1,7 +1,7 @@
 #
 # build the target container
 #
-FROM public.ecr.aws/amazoncorretto/amazoncorretto:17-al2023-jdk
+FROM public.ecr.aws/amazoncorretto/amazoncorretto:17.0.17-al2023-headless
 
 # update the packages
 RUN yum -y update && yum -y install findutils shadow-utils wget unzip hostname
