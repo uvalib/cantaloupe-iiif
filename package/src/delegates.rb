@@ -289,97 +289,348 @@ class CustomDelegate
      mandala_bucket = ENV['MANDALA_BUCKET_NAME']
 
      #
-     # Start with the most common cases
+     # look for the uva-lib requests
      #
+     if id.match(/^uva-lib/)
 
-     # look for uva-lib:nnnnn (5 digits)
-     if match = id.match(/^uva-lib:([0-9][0-9])?([0-9][0-9])?([0-9])?$/)
-        d1, d2, d3 = match.captures
-        key    = "uva-lib/#{d1}/#{d2}/#{d3}/#{d1}#{d2}#{d3}.jp2"
-        bucket = iiif_bucket
-        puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
-        return { "bucket" => bucket, "key" => key }
+        # look for uva-lib:nnnnn (5 digits)
+        if match = id.match(/^uva-lib:([0-9][0-9])?([0-9][0-9])?([0-9])?$/)
+           d1, d2, d3 = match.captures
+           key    = "uva-lib/#{d1}/#{d2}/#{d3}/#{d1}#{d2}#{d3}.jp2"
+           bucket = iiif_bucket
+           puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
+           return { "bucket" => bucket, "key" => key }
+        end
+
+        # look for uva-lib:nnnnnn (6 digits)
+        if match = id.match(/^uva-lib:([0-9][0-9])?([0-9][0-9])?([0-9][0-9])?$/)
+           d1, d2, d3 = match.captures
+           key    = "uva-lib/#{d1}/#{d2}/#{d3}/#{d1}#{d2}#{d3}.jp2"
+           bucket = iiif_bucket
+           puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
+           return { "bucket" => bucket, "key" => key }
+        end
+
+        # look for uva-lib:nnnnnnn (7 digits)
+        if match = id.match(/^uva-lib:([0-9][0-9])?([0-9][0-9])?([0-9][0-9])?([0-9])?$/)
+           d1, d2, d3, d4 = match.captures
+           key    = "uva-lib/#{d1}/#{d2}/#{d3}/#{d4}/#{d1}#{d2}#{d3}#{d4}.jp2"
+           bucket = iiif_bucket
+           puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
+           return { "bucket" => bucket, "key" => key }
+        end
+
+        # the failure case
+        puts "ERROR: missing uva-lib rewrite [#{id}]"
+        return nil
+
      end
 
-     # look for uva-lib:nnnnnn (6 digits)
-     if match = id.match(/^uva-lib:([0-9][0-9])?([0-9][0-9])?([0-9][0-9])?$/)
-        d1, d2, d3 = match.captures
-        key    = "uva-lib/#{d1}/#{d2}/#{d3}/#{d1}#{d2}#{d3}.jp2"
-        bucket = iiif_bucket
-        puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
-        return { "bucket" => bucket, "key" => key }
+     #
+     # look for the shanti-image requests
+     #
+     if match = id.match(/^shanti-image/)
+
+        # look for shanti-image-*nnn (3 digits)
+        if match = id.match(/^shanti-image*-([0-9][0-9])?([0-9])?$/)
+           d1, d2 = match.captures
+           key    = "mandala-assets/#{d1}/#{d2}/shanti-image-#{d1}#{d2}.jp2"
+           bucket = mandala_bucket
+           puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
+           return { "bucket" => bucket, "key" => key }
+        end
+
+        # look for shanti-image-*nnnn (4 digits)
+        if match = id.match(/^shanti-image*-([0-9][0-9])?([0-9][0-9])?$/)
+           d1, d2 = match.captures
+           key    = "mandala-assets/#{d1}/#{d2}/shanti-image-#{d1}#{d2}.jp2"
+           bucket = mandala_bucket
+           puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
+           return { "bucket" => bucket, "key" => key }
+        end
+
+        # look for shanti-image-*nnnnn (5 digits)
+        if match = id.match(/^shanti-image*-([0-9][0-9])?([0-9][0-9])?([0-9])?$/)
+           d1, d2, d3 = match.captures
+           key    = "mandala-assets/#{d1}/#{d2}/#{d3}/shanti-image-#{d1}#{d2}#{d3}.jp2"
+           bucket = mandala_bucket
+           puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
+           return { "bucket" => bucket, "key" => key }
+        end
+
+        # look for shanti-image-*nnnnnn (6 digits)
+        if match = id.match(/^shanti-image*-([0-9][0-9])?([0-9][0-9])?([0-9][0-9])?$/)
+           d1, d2, d3 = match.captures
+           key    = "mandala-assets/#{d1}/#{d2}/#{d3}/shanti-image-#{d1}#{d2}#{d3}.jp2"
+           bucket = mandala_bucket
+           puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
+           return { "bucket" => bucket, "key" => key }
+        end
+
+        # look for shanti-image-*nnnnnnn (7 digits)
+        if match = id.match(/^shanti-image*-([0-9][0-9])?([0-9][0-9])?([0-9][0-9])?([0-9])?$/)
+           d1, d2, d3, d4 = match.captures
+           key    = "mandala-assets/#{d1}/#{d2}/#{d3}/#{d4}/shanti-image-#{d1}#{d2}#{d3}#{d4}.jp2"
+           bucket = mandala_bucket
+           puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
+           return { "bucket" => bucket, "key" => key }
+        end
+
+        # look for shanti-image-*nnnnnnnn (8 digits)
+        if match = id.match(/^shanti-image*-([0-9][0-9])?([0-9][0-9])?([0-9][0-9])?([0-9][0-9])?$/)
+           d1, d2, d3, d4 = match.captures
+           key    = "mandala-assets/#{d1}/#{d2}/#{d3}/#{d4}/shanti-image-#{d1}#{d2}#{d3}#{d4}.jp2"
+           bucket = mandala_bucket
+           puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
+           return { "bucket" => bucket, "key" => key }
+        end
+
+        # the failure case
+        puts "ERROR: missing shanti-image rewrite [#{id}]"
+        return nil
+
      end
 
-     # look for uva-lib:nnnnnnn (7 digits)
-     if match = id.match(/^uva-lib:([0-9][0-9])?([0-9][0-9])?([0-9][0-9])?([0-9])?$/)
-        d1, d2, d3, d4 = match.captures
-        key    = "uva-lib/#{d1}/#{d2}/#{d3}/#{d4}/#{d1}#{d2}#{d3}#{d4}.jp2"
-        bucket = iiif_bucket
-        puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
-        return { "bucket" => bucket, "key" => key }
+     #
+     # look for the law:archives requests
+     #
+     if match = id.match(/^law:archives/)
+
+        # look for law:archives:cnnnn (4 digits)
+        if match = id.match(/^law:archives:c([0-9][0-9])?([0-9][0-9])?$/)
+           d1, d2 = match.captures
+           key    = "law/archives/#{d1}/#{d2}/#{d1}#{d2}.jp2"
+           bucket = iiif_bucket
+           puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
+           return { "bucket" => bucket, "key" => key }
+        end
+
+        # look for law:archives:cnnnnn (5 digits)
+        if match = id.match(/^law:archives:c([0-9][0-9])?([0-9][0-9])?([0-9])?$/)
+           d1, d2, d3 = match.captures
+           key    = "law/archives/#{d1}/#{d2}/#{d3}/#{d1}#{d2}#{d3}.jp2"
+           bucket = iiif_bucket
+           puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
+           return { "bucket" => bucket, "key" => key }
+        end
+
+        # look for law:archives:cnnnnnn (6 digits)
+        if match = id.match(/^law:archives:c([0-9][0-9])?([0-9][0-9])?([0-9][0-9])?$/)
+           d1, d2, d3 = match.captures
+           key    = "law/archives/#{d1}/#{d2}/#{d3}/#{d1}#{d2}#{d3}.jp2"
+           bucket = iiif_bucket
+           puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
+           return { "bucket" => bucket, "key" => key }
+        end
+
+        # look for law:archives:cnnnnnnn (7 digits)
+        if match = id.match(/^law:archives:c([0-9][0-9])?([0-9][0-9])?([0-9][0-9])?([0-9])?$/)
+           d1, d2, d3, d4 = match.captures
+           key    = "law/archives/#{d1}/#{d2}/#{d3}/#{d4}/#{d1}#{d2}#{d3}#{d4}.jp2"
+           bucket = iiif_bucket
+           puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
+           return { "bucket" => bucket, "key" => key }
+        end
+
+        # look for law:archives:rg32-400:name
+        if match = id.match(/^law:archives:rg32-400:(.+)?$/)
+           c1 = match.captures[0]
+           key    = "law/archives/rg32-400/law:archives:rg32-400:#{c1}.jp2"
+           bucket = iiif_bucket
+           puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
+           return { "bucket" => bucket, "key" => key }
+        end
+
+        # the failure case
+        puts "ERROR: missing law:archives rewrite [#{id}]"
+        return nil
+
      end
 
-     # look for shanti-image-*nnn (3 digits)
-     if match = id.match(/^shanti-image*-([0-9][0-9])?([0-9])?$/)
-        d1, d2 = match.captures
-        key    = "mandala-assets/#{d1}/#{d2}/shanti-image-#{d1}#{d2}.jp2"
-        bucket = mandala_bucket
-        puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
-        return { "bucket" => bucket, "key" => key }
+     #
+     # look for the law:pwct requests
+     #
+     if match = id.match(/^law:pwct/)
+
+        # look for law:pwct:nn (2 digits)
+        if match = id.match(/^law:pwct:([0-9][0-9])?$/)
+           d1 = match.captures[0]
+           key    = "law/pwct/#{d1}/#{d1}.jp2"
+           bucket = iiif_bucket
+           puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
+           return { "bucket" => bucket, "key" => key }
+        end
+
+        # look for law:pwct:nnn (3 digits)
+        if match = id.match(/^law:pwct:([0-9][0-9])?([0-9])?$/)
+           d1, d2 = match.captures
+           key    = "law/pwct/#{d1}/#{d2}/#{d1}#{d2}.jp2"
+           bucket = iiif_bucket
+           puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
+           return { "bucket" => bucket, "key" => key }
+        end
+
+        # look for law:pwct:nnnn (4 digits)
+        if match = id.match(/^law:pwct:([0-9][0-9])?([0-9][0-9])?$/)
+           d1, d2 = match.captures
+           key    = "law/pwct/#{d1}/#{d2}/#{d1}#{d2}.jp2"
+           bucket = iiif_bucket
+           puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
+           return { "bucket" => bucket, "key" => key }
+        end
+
+        # look for law:pwct:nnnnn (5 digits)
+        if match = id.match(/^law:pwct:([0-9][0-9])?([0-9][0-9])?([0-9])?$/)
+           d1, d2, d3 = match.captures
+           key    = "law/pwct/#{d1}/#{d2}/#{d3}/#{d1}#{d2}#{d3}.jp2"
+           bucket = iiif_bucket
+           puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
+           return { "bucket" => bucket, "key" => key }
+        end
+
+        # look for law:pwct:nnnnnn (6 digits)
+        if match = id.match(/^law:pwct:([0-9][0-9])?([0-9][0-9])?([0-9][0-9])?$/)
+           d1, d2, d3 = match.captures
+           key    = "law/pwct/#{d1}/#{d2}/#{d3}/#{d1}#{d2}#{d3}.jp2"
+           bucket = iiif_bucket
+           puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
+           return { "bucket" => bucket, "key" => key }
+        end
+
+        # look for law:pwct:nnnnnnn (7 digits)
+        if match = id.match(/^law:pwct:([0-9][0-9])?([0-9][0-9])?([0-9][0-9])?([0-9])?$/)
+           d1, d2, d3, d4 = match.captures
+           key    = "law/pwct/#{d1}/#{d2}/#{d3}/#{d4}/#{d1}#{d2}#{d3}#{d4}.jp2"
+           bucket = iiif_bucket
+           puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
+           return { "bucket" => bucket, "key" => key }
+        end
+
+        # the failure case
+        puts "ERROR: missing law:pwct rewrite [#{id}]"
+        return nil
+
      end
 
-     # look for shanti-image-*nnnn (4 digits)
-     if match = id.match(/^shanti-image*-([0-9][0-9])?([0-9][0-9])?$/)
-        d1, d2 = match.captures
-        key    = "mandala-assets/#{d1}/#{d2}/shanti-image-#{d1}#{d2}.jp2"
-        bucket = mandala_bucket
-        puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
-        return { "bucket" => bucket, "key" => key }
+     #
+     # look for the law:scos requests
+     #
+     if match = id.match(/^law:scos/)
+
+        # look for law:scos:nn (2 digits)
+        if match = id.match(/^law:scos:([0-9][0-9])?$/)
+           d1 = match.captures[0]
+           key    = "law/scos/#{d1}/#{d1}.jp2"
+           bucket = iiif_bucket
+           puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
+           return { "bucket" => bucket, "key" => key }
+        end
+
+        # look for law:scos:nnn (3 digits)
+        if match = id.match(/^law:scos:([0-9][0-9])?([0-9])?$/)
+           d1, d2 = match.captures
+           key    = "law/scos/#{d1}/#{d2}/#{d1}#{d2}.jp2"
+           bucket = iiif_bucket
+           puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
+           return { "bucket" => bucket, "key" => key }
+        end
+
+        # look for law:scos:nnnn (4 digits)
+        if match = id.match(/^law:scos:([0-9][0-9])?([0-9][0-9])?$/)
+           d1, d2 = match.captures
+           key    = "law/scos/#{d1}/#{d2}/#{d1}#{d2}.jp2"
+           bucket = iiif_bucket
+           puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
+           return { "bucket" => bucket, "key" => key }
+        end
+
+        # look for law:scos:nnnnn (5 digits)
+        if match = id.match(/^law:scos:([0-9][0-9])?([0-9][0-9])?([0-9])?$/)
+           d1, d2, d3 = match.captures
+           key    = "law/scos/#{d1}/#{d2}/#{d3}/#{d1}#{d2}#{d3}.jp2"
+           bucket = iiif_bucket
+           puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
+           return { "bucket" => bucket, "key" => key }
+        end
+
+        # look for law:scos:nnnnnn (6 digits)
+        if match = id.match(/^law:scos:([0-9][0-9])?([0-9][0-9])?([0-9][0-9])?$/)
+           d1, d2, d3 = match.captures
+           key    = "law/scos/#{d1}/#{d2}/#{d3}/#{d1}#{d2}#{d3}.jp2"
+           bucket = iiif_bucket
+           puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
+           return { "bucket" => bucket, "key" => key }
+        end
+
+        # look for law:scos:nnnnnnn (7 digits)
+        if match = id.match(/^law:scos:([0-9][0-9])?([0-9][0-9])?([0-9][0-9])?([0-9])?$/)
+           d1, d2, d3, d4 = match.captures
+           key    = "law/scos/#{d1}/#{d2}/#{d3}/#{d4}/#{d1}#{d2}#{d3}#{d4}.jp2"
+           bucket = iiif_bucket
+           puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
+           return { "bucket" => bucket, "key" => key }
+        end
+
+        # the failure case
+        puts "ERROR: missing law:scos rewrite [#{id}]"
+        return nil
+
      end
 
-     # look for shanti-image-*nnnnn (5 digits)
-     if match = id.match(/^shanti-image*-([0-9][0-9])?([0-9][0-9])?([0-9])?$/)
-        d1, d2, d3 = match.captures
-        key    = "mandala-assets/#{d1}/#{d2}/#{d3}/shanti-image-#{d1}#{d2}#{d3}.jp2"
-        bucket = mandala_bucket
-        puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
-        return { "bucket" => bucket, "key" => key }
-     end
+     #
+     # look for the law:mrcs requests
+     #
+     if match = id.match(/^law:mrcs/)
 
-     # look for shanti-image-*nnnnnn (6 digits)
-     if match = id.match(/^shanti-image*-([0-9][0-9])?([0-9][0-9])?([0-9][0-9])?$/)
-        d1, d2, d3 = match.captures
-        key    = "mandala-assets/#{d1}/#{d2}/#{d3}/shanti-image-#{d1}#{d2}#{d3}.jp2"
-        bucket = mandala_bucket
-        puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
-        return { "bucket" => bucket, "key" => key }
-     end
+        # look for law:mrcs:nn (2 digits)
+        if match = id.match(/^law:mrcs:([0-9][0-9])?$/)
+           d1 = match.captures[0]
+           key    = "law/mrcs/#{d1}/#{d1}.jp2"
+           bucket = iiif_bucket
+           puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
+           return { "bucket" => bucket, "key" => key }
+        end
 
-     # look for shanti-image-*nnnnnnn (7 digits)
-     if match = id.match(/^shanti-image*-([0-9][0-9])?([0-9][0-9])?([0-9][0-9])?([0-9])?$/)
-        d1, d2, d3, d4 = match.captures
-        key    = "mandala-assets/#{d1}/#{d2}/#{d3}/#{d4}/shanti-image-#{d1}#{d2}#{d3}#{d4}.jp2"
-        bucket = mandala_bucket
-        puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
-        return { "bucket" => bucket, "key" => key }
-     end
+        # look for law:mrcs:nnn (3 digits)
+        if match = id.match(/^law:mrcs:([0-9][0-9])?([0-9])?$/)
+           d1, d2 = match.captures
+           key    = "law/mrcs/#{d1}/#{d2}/#{d1}#{d2}.jp2"
+           bucket = iiif_bucket
+           puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
+           return { "bucket" => bucket, "key" => key }
+        end
 
-     # look for shanti-image-*nnnnnnnn (8 digits)
-     if match = id.match(/^shanti-image*-([0-9][0-9])?([0-9][0-9])?([0-9][0-9])?([0-9][0-9])?$/)
-        d1, d2, d3, d4 = match.captures
-        key    = "mandala-assets/#{d1}/#{d2}/#{d3}/#{d4}/shanti-image-#{d1}#{d2}#{d3}#{d4}.jp2"
-        bucket = mandala_bucket
-        puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
-        return { "bucket" => bucket, "key" => key }
-     end
+        # look for law:mrcs:nnnn (4 digits)
+        if match = id.match(/^law:mrcs:([0-9][0-9])?([0-9][0-9])?$/)
+           d1, d2 = match.captures
+           key    = "law/mrcs/#{d1}/#{d2}/#{d1}#{d2}.jp2"
+           bucket = iiif_bucket
+           puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
+           return { "bucket" => bucket, "key" => key }
+        end
 
-     # look for dibs:xxxxxxxxx-nnn
-     if match = id.match(/^dibs:([A-Z0-9]+)-?([0-9][0-9][0-9])?$/)
-        d1, d2 = match.captures
-        key    = "dibs/#{d1}/#{d1}-#{d2}.jp2"
-        bucket = iiif_bucket
-        puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
-        return { "bucket" => bucket, "key" => key }
+        # look for law:mrcs:nnnnn (5 digits)
+        if match = id.match(/^law:mrcs:([0-9][0-9])?([0-9][0-9])?([0-9])?$/)
+           d1, d2, d3 = match.captures
+           key    = "law/mrcs/#{d1}/#{d2}/#{d3}/#{d1}#{d2}#{d3}.jp2"
+           bucket = iiif_bucket
+           puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
+           return { "bucket" => bucket, "key" => key }
+        end
+
+        # look for law:mrcs:nnnnnn (6 digits)
+        if match = id.match(/^law:mrcs:([0-9][0-9])?([0-9][0-9])?([0-9][0-9])?$/)
+           d1, d2, d3 = match.captures
+           key    = "law/mrcs/#{d1}/#{d2}/#{d3}/#{d1}#{d2}#{d3}.jp2"
+           bucket = iiif_bucket
+           puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
+           return { "bucket" => bucket, "key" => key }
+        end
+
+        # the failure case
+        puts "ERROR: missing law:mrcs rewrite [#{id}]"
+        return nil
+
      end
 
      #
@@ -404,154 +655,19 @@ class CustomDelegate
         return { "bucket" => bucket, "key" => key }
      end
 
-     # look for law:archives:cnnnn (4 digits)
-     if match = id.match(/^law:archives:c([0-9][0-9])?([0-9][0-9])?$/)
-        d1, d2 = match.captures
-        key    = "law/archives/#{d1}/#{d2}/#{d1}#{d2}.jp2"
-        bucket = iiif_bucket
-        puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
-        return { "bucket" => bucket, "key" => key }
-     end
-
-     # look for law:archives:cnnnnn (5 digits)
-     if match = id.match(/^law:archives:c([0-9][0-9])?([0-9][0-9])?([0-9])?$/)
-        d1, d2, d3 = match.captures
-        key    = "law/archives/#{d1}/#{d2}/#{d3}/#{d1}#{d2}#{d3}.jp2"
-        bucket = iiif_bucket
-        puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
-        return { "bucket" => bucket, "key" => key }
-     end
-
-     # look for law:archives:cnnnnnn (6 digits)
-     if match = id.match(/^law:archives:c([0-9][0-9])?([0-9][0-9])?([0-9][0-9])?$/)
-        d1, d2, d3 = match.captures
-        key    = "law/archives/#{d1}/#{d2}/#{d3}/#{d1}#{d2}#{d3}.jp2"
-        bucket = iiif_bucket
-        puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
-        return { "bucket" => bucket, "key" => key }
-     end
-
-     # look for law:archives:cnnnnnnn (7 digits)
-     if match = id.match(/^law:archives:c([0-9][0-9])?([0-9][0-9])?([0-9][0-9])?([0-9])?$/)
-        d1, d2, d3, d4 = match.captures
-        key    = "law/archives/#{d1}/#{d2}/#{d3}/#{d4}/#{d1}#{d2}#{d3}#{d4}.jp2"
-        bucket = iiif_bucket
-        puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
-        return { "bucket" => bucket, "key" => key }
-     end
-
-     # look for law:pwct:nn (2 digits)
-     if match = id.match(/^law:pwct:([0-9][0-9])?$/)
-        d1 = match.captures[0]
-        key    = "law/pwct/#{d1}/#{d1}.jp2"
-        bucket = iiif_bucket
-        puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
-        return { "bucket" => bucket, "key" => key }
-     end
-
-     # look for law:pwct:nnn (3 digits)
-     if match = id.match(/^law:pwct:([0-9][0-9])?([0-9])?$/)
-        d1, d2 = match.captures
-        key    = "law/pwct/#{d1}/#{d2}/#{d1}#{d2}.jp2"
-        bucket = iiif_bucket
-        puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
-        return { "bucket" => bucket, "key" => key }
-     end
-
-     # look for law:pwct:nnnn (4 digits)
-     if match = id.match(/^law:pwct:([0-9][0-9])?([0-9][0-9])?$/)
-        d1, d2 = match.captures
-        key    = "law/pwct/#{d1}/#{d2}/#{d1}#{d2}.jp2"
-        bucket = iiif_bucket
-        puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
-        return { "bucket" => bucket, "key" => key }
-     end
-
-     # look for law:pwct:nnnnn (5 digits)
-     if match = id.match(/^law:pwct:([0-9][0-9])?([0-9][0-9])?([0-9])?$/)
-        d1, d2, d3 = match.captures
-        key    = "law/pwct/#{d1}/#{d2}/#{d3}/#{d1}#{d2}#{d3}.jp2"
-        bucket = iiif_bucket
-        puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
-        return { "bucket" => bucket, "key" => key }
-     end
-
-     # look for law:pwct:nnnnnn (6 digits)
-     if match = id.match(/^law:pwct:([0-9][0-9])?([0-9][0-9])?([0-9][0-9])?$/)
-        d1, d2, d3 = match.captures
-        key    = "law/pwct/#{d1}/#{d2}/#{d3}/#{d1}#{d2}#{d3}.jp2"
-        bucket = iiif_bucket
-        puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
-        return { "bucket" => bucket, "key" => key }
-     end
-
-     # look for law:pwct:nnnnnnn (7 digits)
-     if match = id.match(/^law:pwct:([0-9][0-9])?([0-9][0-9])?([0-9][0-9])?([0-9])?$/)
-        d1, d2, d3, d4 = match.captures
-        key    = "law/pwct/#{d1}/#{d2}/#{d3}/#{d4}/#{d1}#{d2}#{d3}#{d4}.jp2"
-        bucket = iiif_bucket
-        puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
-        return { "bucket" => bucket, "key" => key }
-     end
-
-     # look for law:mrcs:nn (2 digits)
-     if match = id.match(/^law:mrcs:([0-9][0-9])?$/)
-        d1 = match.captures[0]
-        key    = "law/mrcs/#{d1}/#{d1}.jp2"
-        bucket = iiif_bucket
-        puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
-        return { "bucket" => bucket, "key" => key }
-     end
-
-     # look for law:mrcs:nnn (3 digits)
-     if match = id.match(/^law:mrcs:([0-9][0-9])?([0-9])?$/)
-        d1, d2 = match.captures
-        key    = "law/mrcs/#{d1}/#{d2}/#{d1}#{d2}.jp2"
-        bucket = iiif_bucket
-        puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
-        return { "bucket" => bucket, "key" => key }
-     end
-
-     # look for law:mrcs:nnnn (4 digits)
-     if match = id.match(/^law:mrcs:([0-9][0-9])?([0-9][0-9])?$/)
-        d1, d2 = match.captures
-        key    = "law/mrcs/#{d1}/#{d2}/#{d1}#{d2}.jp2"
-        bucket = iiif_bucket
-        puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
-        return { "bucket" => bucket, "key" => key }
-     end
-
-     # look for law:mrcs:nnnnn (5 digits)
-     if match = id.match(/^law:mrcs:([0-9][0-9])?([0-9][0-9])?([0-9])?$/)
-        d1, d2, d3 = match.captures
-        key    = "law/mrcs/#{d1}/#{d2}/#{d3}/#{d1}#{d2}#{d3}.jp2"
-        bucket = iiif_bucket
-        puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
-        return { "bucket" => bucket, "key" => key }
-     end
-
-     # look for law:mrcs:nnnnnn (6 digits)
-     if match = id.match(/^law:mrcs:([0-9][0-9])?([0-9][0-9])?([0-9][0-9])?$/)
-        d1, d2, d3 = match.captures
-        key    = "law/mrcs/#{d1}/#{d2}/#{d3}/#{d1}#{d2}#{d3}.jp2"
-        bucket = iiif_bucket
-        puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
-        return { "bucket" => bucket, "key" => key }
-     end
-
-     # look for law:archives:rg32-400:name
-     if match = id.match(/^law:archives:rg32-400:(.+)?$/)
-        c1 = match.captures[0]
-        key    = "law/archives/rg32-400/law:archives:rg32-400:#{c1}.jp2"
-        bucket = iiif_bucket
-        puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
-        return { "bucket" => bucket, "key" => key }
-     end
-
      # look for law:lile:nnn (3 digits)
      if match = id.match(/^law:lile:([0-9][0-9])?([0-9])?$/)
         d1, d2 = match.captures
         key    = "law/lile/#{d1}/#{d2}/#{d1}#{d2}.jp2"
+        bucket = iiif_bucket
+        puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
+        return { "bucket" => bucket, "key" => key }
+     end
+
+     # look for dibs:xxxxxxxxx-nnn
+     if match = id.match(/^dibs:([A-Z0-9]+)-?([0-9][0-9][0-9])?$/)
+        d1, d2 = match.captures
+        key    = "dibs/#{d1}/#{d1}-#{d2}.jp2"
         bucket = iiif_bucket
         puts "INFO: rewrite [#{id}] -> [s3://#{bucket}/#{key}]"
         return { "bucket" => bucket, "key" => key }
@@ -568,7 +684,7 @@ class CustomDelegate
 
      # the failure case
      puts "ERROR: missing rewrite [#{id}]"
-     nil
+     return nil
   end
 
   ##
