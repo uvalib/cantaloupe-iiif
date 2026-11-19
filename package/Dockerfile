@@ -1,7 +1,7 @@
 #
 # build the target container
 #
-FROM public.ecr.aws/amazoncorretto/amazoncorretto:17-al2023-jdk
+FROM public.ecr.aws/amazoncorretto/amazoncorretto:21-al2023-amd64
 
 # update the packages
 RUN yum -y update && yum -y install findutils shadow-utils wget unzip hostname
@@ -28,7 +28,7 @@ EXPOSE 8080
 CMD ["scripts/entry.sh"]
 
 # add cantaloupe assets
-ENV CANTALOUPE_VERSION=5.0.7
+ENV CANTALOUPE_VERSION=5.0.8
 RUN cd /tmp && wget https://github.com/cantaloupe-project/cantaloupe/releases/download/v${CANTALOUPE_VERSION}/cantaloupe-${CANTALOUPE_VERSION}.zip && unzip cantaloupe-${CANTALOUPE_VERSION}.zip
 RUN cp /tmp/cantaloupe-${CANTALOUPE_VERSION}/cantaloupe-${CANTALOUPE_VERSION}.jar $APP_HOME/bin/cantaloupe.jar
 #RUN cp /tmp/cantaloupe-${CANTALOUPE_VERSION}/deps/Linux-x86-64/lib/*.so /usr/local/lib/
